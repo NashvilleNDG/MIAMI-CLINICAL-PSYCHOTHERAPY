@@ -810,6 +810,19 @@ a:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   color: var(--color-subtext);
   margin: 0;
 }
+.inquiry-form-message {
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: var(--size-small);
+}
+.inquiry-form-message[hidden] { display: none; }
+.inquiry-form-message.contact-form-success--error {
+  background: #ffebee;
+  color: #c62828;
+}
 
 /* ========== SECTION 7: FINAL CTA BANNER ========== */
 .final-cta {

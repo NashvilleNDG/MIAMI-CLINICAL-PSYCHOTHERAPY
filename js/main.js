@@ -67,22 +67,104 @@
     });
   }
 
-  /* --- Inquiry form (static: prevent submit, show message) --- */
+  /* --- Inquiry form (Formspree submit + validation + success/error message) --- */
   function initInquiryForm() {
     var form = document.querySelector(".inquiry-form");
     if (!form) return;
+
+    var formEndpoint = form.getAttribute("action");
+    if (!formEndpoint || formEndpoint === "#") return;
+
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    function validateEmail(email) {
+      return email && emailRegex.test(email.trim());
+    }
+    function showError(input) {
+      input.classList.add("error");
+      input.setAttribute("aria-invalid", "true");
+    }
+    function clearErrors() {
+      form.querySelectorAll(".error").forEach(function (el) {
+        el.classList.remove("error");
+        el.removeAttribute("aria-invalid");
+      });
+    }
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var btn = form.querySelector('button[type="submit"]');
-      if (btn) {
-        var origHtml = btn.innerHTML;
-        btn.innerHTML = '<span class="btn-icon" aria-hidden="true">✈</span> Message sent — we\'ll be in touch!';
-        btn.disabled = true;
-        setTimeout(function () {
-          btn.innerHTML = origHtml;
-          btn.disabled = false;
-        }, 4000);
+      clearErrors();
+
+      var nameEl = form.querySelector("#inquiry-name");
+      var emailEl = form.querySelector("#inquiry-email");
+      var messageEl = form.querySelector("#inquiry-message");
+      var successEl = form.querySelector("#inquiry-form-success");
+      var submitBtn = form.querySelector('button[type="submit"]');
+
+      var valid = true;
+      if (!nameEl || !nameEl.value.trim()) {
+        if (nameEl) showError(nameEl);
+        valid = false;
       }
+      if (!emailEl || !emailEl.value.trim()) {
+        if (emailEl) showError(emailEl);
+        valid = false;
+      } else if (emailEl && !validateEmail(emailEl.value)) {
+        showError(emailEl);
+        valid = false;
+      }
+      if (!messageEl || !messageEl.value.trim()) {
+        if (messageEl) showError(messageEl);
+        valid = false;
+      }
+      if (!valid) {
+        var firstInvalid = form.querySelector(".error");
+        if (firstInvalid) firstInvalid.focus();
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="btn-icon" aria-hidden="true">✈</span> Sending...';
+      }
+      if (successEl) {
+        successEl.hidden = true;
+        successEl.classList.remove("contact-form-success--error");
+        successEl.textContent = "";
+      }
+
+      fetch(formEndpoint, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      })
+        .then(function (response) {
+          if (response.ok) {
+            if (successEl) {
+              successEl.textContent = "Message sent — we'll be in touch within 24 hours.";
+              successEl.hidden = false;
+              successEl.setAttribute("role", "status");
+            }
+            if (submitBtn) {
+              submitBtn.innerHTML = '<span class="btn-icon" aria-hidden="true">✈</span> Send Inquiry';
+              submitBtn.disabled = false;
+              submitBtn.textContent = "Message sent";
+            }
+            form.reset();
+          } else {
+            throw new Error("Form submission failed");
+          }
+        })
+        .catch(function () {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span class="btn-icon" aria-hidden="true">✈</span> Send Inquiry';
+          }
+          if (successEl) {
+            successEl.textContent = "Something went wrong. Please try again or call (786) 972-7110.";
+            successEl.classList.add("contact-form-success--error");
+            successEl.hidden = false;
+          }
+        });
     });
   }
 
