@@ -1594,21 +1594,21 @@ a:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 }
 
 .insurance-info-section {
-  background: var(--insurance-cream, #f8f5f0);
+  background: var(--color-teal);
   padding: 80px 0;
 }
 .insurance-info-title {
   font-family: var(--font-heading);
   font-size: 40px;
   font-weight: 600;
-  color: var(--color-teal);
+  color: var(--color-white);
   text-align: center;
   margin: 0 0 12px 0;
 }
 .insurance-info-intro {
   text-align: center;
   font-size: var(--size-body);
-  color: var(--color-subtext);
+  color: var(--color-white);
   margin: 0 0 40px 0;
 }
 .insurance-cards {
@@ -2548,6 +2548,14 @@ a.contact-card:hover {
 }
 .contact-card-teal:hover {
   background: #0a3d3d;
+}
+.contact-card-teal .contact-card-content a,
+.contact-card-link {
+  color: var(--color-gold);
+  text-decoration: underline;
+}
+.contact-card-teal .contact-card-content a:hover {
+  color: var(--color-white);
 }
 a.contact-card-teal:hover {
   background: #0a3d3d;
