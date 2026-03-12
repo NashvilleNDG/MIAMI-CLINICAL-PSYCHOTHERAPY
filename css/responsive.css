@@ -31,6 +31,9 @@
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .counseling-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   .meet-inner {
     grid-template-columns: 1fr;
@@ -423,6 +426,10 @@
   .services-grid {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+  .counseling-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
   .section-cta .btn { width: 100%; text-align: center; }
 

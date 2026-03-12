@@ -506,6 +506,49 @@ a:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   line-height: 1.5;
 }
 
+/* Counseling services page: 3 cards per row, larger card images */
+.counseling-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.counseling-service-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  padding: 0;
+  text-align: left;
+}
+.counseling-service-card .service-card-image {
+  height: 200px;
+  margin: 0;
+  border-radius: 0;
+}
+.counseling-service-card .service-card-title,
+.counseling-service-card .service-card-desc {
+  padding: 0 24px;
+}
+.counseling-service-card .service-card-title {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.counseling-service-card .service-card-desc {
+  flex: 1;
+  margin-bottom: 16px;
+}
+.counseling-service-card .home-service-link {
+  display: inline-block;
+  padding: 0 24px 24px;
+  font-weight: 600;
+  color: var(--color-teal);
+}
+.counseling-service-card .home-service-link:hover {
+  text-decoration: underline;
+}
+
 /* ========== MEET THE THERAPIST ========== */
 .meet-therapist {
   background: var(--color-cream);
