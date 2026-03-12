@@ -1,5 +1,5 @@
 /**
- * Serene Minds Psychotherapy – Main JavaScript
+ * Miami Clinical Psychotherapy – Main JavaScript
  * Accordion (FAQ) and mobile navigation (hamburger)
  * Vanilla JS, no frameworks.
  */
